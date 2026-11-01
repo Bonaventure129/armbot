@@ -1,0 +1,9 @@
+/home/ugbah-awele-bonaventure/armbot/build/armbot_controller/CMakeFiles/uninstall.dir
+/home/ugbah-awele-bonaventure/armbot/build/armbot_controller/CMakeFiles/armbot_controller_uninstall.dir
+/home/ugbah-awele-bonaventure/armbot/build/armbot_controller/CMakeFiles/test.dir
+/home/ugbah-awele-bonaventure/armbot/build/armbot_controller/CMakeFiles/edit_cache.dir
+/home/ugbah-awele-bonaventure/armbot/build/armbot_controller/CMakeFiles/rebuild_cache.dir
+/home/ugbah-awele-bonaventure/armbot/build/armbot_controller/CMakeFiles/list_install_components.dir
+/home/ugbah-awele-bonaventure/armbot/build/armbot_controller/CMakeFiles/install.dir
+/home/ugbah-awele-bonaventure/armbot/build/armbot_controller/CMakeFiles/install/local.dir
+/home/ugbah-awele-bonaventure/armbot/build/armbot_controller/CMakeFiles/install/strip.dir

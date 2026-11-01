@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!-- Needs the properties defined in armbot.urdf.xacro (arm_lower, arm_upper, side_max,
+     gear_ratio, right_ratio, left_ratio), so include it AFTER them (bottom of the main file). -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="armbot">
+
+  <ros2_control name="RobotSystem" type="system">
+
+    <!-- ===================== Simulation (Gazebo, ROS 2 Jazzy) ===================== -->
+    <xacro:if value="$(arg is_sim)">
+
+      <hardware>
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+      </hardware>
+
+      <!-- Gripper joints that follow centre_gear_joint (same multipliers as the URDF <mimic> tags) -->
+      <joint name="right_gear_joint">
+        <param name="mimic">centre_gear_joint</param>
+        <param name="multiplier">${right_ratio}</param>
+      </joint>
+      <joint name="left_gear_joint">
+        <param name="mimic">centre_gear_joint</param>
+        <param name="multiplier">${left_ratio}</param>
+      </joint>
+      <joint name="right_finger_joint">
+        <param name="mimic">centre_gear_joint</param>
+        <param name="multiplier">${-right_ratio}</param>
+      </joint>
+      <joint name="left_finger_joint">
+        <param name="mimic">centre_gear_joint</param>
+        <param name="multiplier">${-left_ratio}</param>
+      </joint>
+      <joint name="right_follower_joint">
+        <param name="mimic">centre_gear_joint</param>
+        <param name="multiplier">${right_ratio}</param>
+      </joint>
+      <joint name="left_follower_joint">
+        <param name="mimic">centre_gear_joint</param>
+        <param name="multiplier">${-left_ratio}</param>
+      </joint>
+    </xacro:if>
+
+    <!-- ===================== Real robot ===================== -->
+    <xacro:unless value="$(arg is_sim)">
+      <hardware>
+        <!-- PLACEHOLDER: your own hardware interface plugin, once you write it -->
+        <plugin>armbot_controller/ArmbotInterface</plugin>
+        <param name="port">/dev/ttyACM0</param>
+      </hardware>
+    </xacro:unless>
+
+    <!-- ===================== Commanded joints (sim and real) ===================== -->
+    <!-- min/max must match the limits in armbot.urdf.xacro -->
+    <joint name="joint_1">
+      <command_interface name="position">
+        <param name="min">${arm_lower}</param>
+        <param name="max">${arm_upper}</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+
+    <joint name="joint_2">
+      <command_interface name="position">
+        <param name="min">-0.5</param>
+        <param name="max">${arm_upper}</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+
+    <joint name="joint_3">
+      <command_interface name="position">
+        <param name="min">${arm_lower}</param>
+        <param name="max">${arm_upper}</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+
+    <joint name="joint_4">
+      <command_interface name="position">
+        <param name="min">${arm_lower}</param>
+        <param name="max">1.0</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+
+    <joint name="joint_5">
+      <command_interface name="position">
+        <param name="min">-0.5</param>
+        <param name="max">${arm_upper}</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+
+    <!-- Gripper: the only commanded gripper joint -->
+    <joint name="centre_gear_joint">
+      <command_interface name="position">
+        <param name="min">0.0</param>
+        <param name="max">${side_max / gear_ratio}</param>
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+
+  </ros2_control>
+
+</robot>

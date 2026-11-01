@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="armbot">
 
+    <!-- Launch arguments -->
+  <xacro:arg name="is_sim" default="true"/>
+
   <!-- ===================== PROPERTIES ===================== -->
   <xacro:property name="mesh_dir" value="package://armbot_description/meshes"/>
 
@@ -221,5 +224,8 @@
   <xacro:mimic_joint name="left_follower_joint" parent="link_5" child="left_follower"
     xyz="0.012007 0.0137 -0.094826"
     axis="-0.013485 -0.99991 0" multiplier="${-left_ratio}"/>
+    
+  <xacro:include filename="$(find armbot_description)/urdf/armbot_gazebo.urdf.xacro"/>
+  <xacro:include filename="$(find armbot_description)/urdf/armbot_ros2_control.xacro"/>
 
 </robot>

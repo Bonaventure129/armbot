@@ -1,0 +1,1 @@
+/home/ugbah-awele-bonaventure/armbot/build/armbot_controller/ament_cmake_core/armbot_controllerConfig-version.cmake

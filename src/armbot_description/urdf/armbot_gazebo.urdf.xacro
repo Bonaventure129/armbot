@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="armbot">
+
+  <!-- Height of the shoulder (joint_1 / base_link frame) above the floor, in metres.
+       PLACEHOLDER: measure from the bottom of your base to the joint_1 axis. -->
+  <xacro:property name="mount_z" value="0.10"/>
+
+  <!-- Fix the robot to the Gazebo world -->
+  <link name="world"/>
+  <joint name="world_to_base" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 ${mount_z}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Gazebo <-> ros2_control bridge (only when simulating) -->
+  <xacro:if value="$(arg is_sim)">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find armbot_controller)/config/armbot_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+
+</robot>

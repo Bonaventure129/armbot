@@ -1,0 +1,1 @@
+ros2launch;robot_state_publisher;xacro;controller_manager;armbot_description;joint_state_publisher_gui;joint_state_broadcaster;position_controllers;ros_gz_sim;ros_gz_bridge;gazebo_ros;gazebo_ros2_control;ament_lint_auto;ament_lint_common

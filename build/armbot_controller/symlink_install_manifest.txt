@@ -1,0 +1,16 @@
+/home/ugbah-awele-bonaventure/armbot/install/armbot_controller/share/armbot_controller/config/armbot_controllers.yaml
+/home/ugbah-awele-bonaventure/armbot/install/armbot_controller/share/ament_index/resource_index/package_run_dependencies/armbot_controller
+/home/ugbah-awele-bonaventure/armbot/install/armbot_controller/share/ament_index/resource_index/parent_prefix_path/armbot_controller
+/home/ugbah-awele-bonaventure/armbot/install/armbot_controller/share/armbot_controller/environment/ament_prefix_path.sh
+/home/ugbah-awele-bonaventure/armbot/install/armbot_controller/share/armbot_controller/environment/ament_prefix_path.dsv
+/home/ugbah-awele-bonaventure/armbot/install/armbot_controller/share/armbot_controller/environment/path.sh
+/home/ugbah-awele-bonaventure/armbot/install/armbot_controller/share/armbot_controller/environment/path.dsv
+/home/ugbah-awele-bonaventure/armbot/install/armbot_controller/share/armbot_controller/local_setup.bash
+/home/ugbah-awele-bonaventure/armbot/install/armbot_controller/share/armbot_controller/local_setup.sh
+/home/ugbah-awele-bonaventure/armbot/install/armbot_controller/share/armbot_controller/local_setup.zsh
+/home/ugbah-awele-bonaventure/armbot/install/armbot_controller/share/armbot_controller/local_setup.dsv
+/home/ugbah-awele-bonaventure/armbot/install/armbot_controller/share/armbot_controller/package.dsv
+/home/ugbah-awele-bonaventure/armbot/install/armbot_controller/share/ament_index/resource_index/packages/armbot_controller
+/home/ugbah-awele-bonaventure/armbot/install/armbot_controller/share/armbot_controller/cmake/armbot_controllerConfig.cmake
+/home/ugbah-awele-bonaventure/armbot/install/armbot_controller/share/armbot_controller/cmake/armbot_controllerConfig-version.cmake
+/home/ugbah-awele-bonaventure/armbot/install/armbot_controller/share/armbot_controller/package.xml

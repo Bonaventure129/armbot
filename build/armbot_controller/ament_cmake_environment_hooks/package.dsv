@@ -1,0 +1,4 @@
+source;share/armbot_controller/local_setup.bash
+source;share/armbot_controller/local_setup.dsv
+source;share/armbot_controller/local_setup.sh
+source;share/armbot_controller/local_setup.zsh

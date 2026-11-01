@@ -1,0 +1,65 @@
+[0.045s] Invoking command in '/home/ugbah-awele-bonaventure/armbot/build/armbot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ugbah-awele-bonaventure/bumperbot_ws/install/bumperbot_py_examples:/home/ugbah-awele-bonaventure/scuttle_robot/install/scuttle_robot_py_examples:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/ugbah-awele-bonaventure/armbot/src/armbot_description -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/ugbah-awele-bonaventure/armbot/install/armbot_description
+[0.350s] -- The C compiler identification is GNU 13.3.0
+[0.949s] -- The CXX compiler identification is GNU 13.3.0
+[1.131s] -- Detecting C compiler ABI info
+[1.503s] -- Detecting C compiler ABI info - done
+[1.559s] -- Check for working C compiler: /usr/bin/cc - skipped
+[1.561s] -- Detecting C compile features
+[1.564s] -- Detecting C compile features - done
+[1.616s] -- Detecting CXX compiler ABI info
+[2.124s] -- Detecting CXX compiler ABI info - done
+[2.191s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[2.192s] -- Detecting CXX compile features
+[2.195s] -- Detecting CXX compile features - done
+[2.283s] -- Found ament_cmake: 2.5.5 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[3.160s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[3.330s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[3.518s] -- Found ament_lint_auto: 0.17.4 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+[3.805s] -- Added test 'flake8' to check Python code syntax and style conventions
+[3.805s] -- Configured 'flake8' exclude dirs and/or files: 
+[3.811s] -- Added test 'lint_cmake' to check CMake code style
+[3.814s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[3.819s] -- Added test 'xmllint' to check XML markup files
+[3.828s] -- Configuring done (3.8s)
+[3.836s] -- Generating done (0.0s)
+[3.841s] -- Build files have been written to: /home/ugbah-awele-bonaventure/armbot/build/armbot_description
+[3.850s] Invoked command in '/home/ugbah-awele-bonaventure/armbot/build/armbot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ugbah-awele-bonaventure/bumperbot_ws/install/bumperbot_py_examples:/home/ugbah-awele-bonaventure/scuttle_robot/install/scuttle_robot_py_examples:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/ugbah-awele-bonaventure/armbot/src/armbot_description -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/ugbah-awele-bonaventure/armbot/install/armbot_description
+[3.853s] Invoking command in '/home/ugbah-awele-bonaventure/armbot/build/armbot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ugbah-awele-bonaventure/bumperbot_ws/install/bumperbot_py_examples:/home/ugbah-awele-bonaventure/scuttle_robot/install/scuttle_robot_py_examples:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/ugbah-awele-bonaventure/armbot/build/armbot_description -- -j8 -l8
+[3.944s] Invoked command in '/home/ugbah-awele-bonaventure/armbot/build/armbot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ugbah-awele-bonaventure/bumperbot_ws/install/bumperbot_py_examples:/home/ugbah-awele-bonaventure/scuttle_robot/install/scuttle_robot_py_examples:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/ugbah-awele-bonaventure/armbot/build/armbot_description -- -j8 -l8
+[3.966s] Invoking command in '/home/ugbah-awele-bonaventure/armbot/build/armbot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ugbah-awele-bonaventure/bumperbot_ws/install/bumperbot_py_examples:/home/ugbah-awele-bonaventure/scuttle_robot/install/scuttle_robot_py_examples:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/ugbah-awele-bonaventure/armbot/build/armbot_description
+[3.990s] -- Install configuration: ""
+[3.991s] -- Execute custom install script
+[3.993s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/launch/display.launch.py
+[4.013s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/launch/gazebo.launch.py
+[4.035s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/meshes/base_link.STL
+[4.056s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/meshes/centre_gear.STL
+[4.077s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/meshes/left_finger.STL
+[4.101s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/meshes/left_follower.STL
+[4.123s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/meshes/left_gear.STL
+[4.145s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/meshes/link_1.STL
+[4.167s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/meshes/link_2.STL
+[4.193s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/meshes/link_3.STL
+[4.213s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/meshes/link_4.STL
+[4.235s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/meshes/link_5.STL
+[4.256s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/meshes/right_finger.STL
+[4.277s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/meshes/right_follower.STL
+[4.297s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/meshes/right_gear.STL
+[4.318s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/urdf/armbot.urdf.xacro
+[4.345s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/urdf/armbot_gazebo.urdf.xacro
+[4.367s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/urdf/armbot_ros2_control.xacro
+[4.389s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/ament_index/resource_index/package_run_dependencies/armbot_description
+[4.418s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/ament_index/resource_index/parent_prefix_path/armbot_description
+[4.440s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/environment/ament_prefix_path.sh
+[4.461s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/environment/ament_prefix_path.dsv
+[4.481s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/environment/path.sh
+[4.502s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/environment/path.dsv
+[4.525s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/local_setup.bash
+[4.550s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/local_setup.sh
+[4.575s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/local_setup.zsh
+[4.603s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/local_setup.dsv
+[4.631s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/package.dsv
+[4.658s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/ament_index/resource_index/packages/armbot_description
+[4.684s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/cmake/armbot_descriptionConfig.cmake
+[4.716s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/cmake/armbot_descriptionConfig-version.cmake
+[4.750s] -- Symlinking: /home/ugbah-awele-bonaventure/armbot/install/armbot_description/share/armbot_description/package.xml
+[4.786s] Invoked command in '/home/ugbah-awele-bonaventure/armbot/build/armbot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ugbah-awele-bonaventure/bumperbot_ws/install/bumperbot_py_examples:/home/ugbah-awele-bonaventure/scuttle_robot/install/scuttle_robot_py_examples:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/ugbah-awele-bonaventure/armbot/build/armbot_description
