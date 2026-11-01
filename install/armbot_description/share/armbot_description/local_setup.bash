@@ -1,0 +1,1 @@
+/home/ugbah-awele-bonaventure/armbot/build/armbot_description/ament_cmake_environment_hooks/local_setup.bash

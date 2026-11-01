@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="armbot">
+
+  <!-- ===================== PROPERTIES ===================== -->
+  <xacro:property name="mesh_dir" value="package://armbot_description/meshes"/>
+
+  <!-- Arm limits: PLACEHOLDERS, set from your hardware -->
+  <xacro:property name="arm_lower" value="-1.5707079632"/>
+  <xacro:property name="arm_upper" value="1.5707079632"/>
+  <xacro:property name="arm_effort" value="5.0"/>
+  <xacro:property name="arm_velocity" value="2.0"/>
+
+  <!-- Gear teeth (use decimals so the division stays a float) -->
+  <xacro:property name="centre_teeth" value="12.0"/>
+  <xacro:property name="side_teeth" value="24.0"/>
+  <!-- side gear rotation per 1 rad of centre gear = 12/24 = 0.5 -->
+  <xacro:property name="gear_ratio" value="${centre_teeth / side_teeth}"/>
+
+  <!-- Max rotation of each SIDE gear (rad). Measure on the real part.
+       The centre gear can turn side_max / gear_ratio. -->
+  <xacro:property name="side_max" value="0.9"/>
+  <xacro:property name="gripper_effort" value="2.0"/>
+  <xacro:property name="gripper_velocity" value="2.0"/>
+
+  <!-- Gear train: centre -> right_gear -> left_gear.
+       right_gear turns opposite to the centre, left_gear turns with it.
+       If the gripper opens when it should close, flip BOTH signs. -->
+  <xacro:property name="right_ratio" value="${-gear_ratio}"/>
+  <xacro:property name="left_ratio" value="${gear_ratio}"/>
+
+  <!-- right_finger: SolidWorks put its joint ~1.5 m from the real pin.
+       rfJ = joint origin as exported, rfP = real pivot relative to right_gear.
+       Visual/inertia are shifted by (rfJ - rfP) so it looks identical at rest
+       but rotates about rfP. rfP is an ESTIMATE: measure it and edit. -->
+  <xacro:property name="rfJ_x" value="-1.5231"/>
+  <xacro:property name="rfJ_y" value="-0.94735"/>
+  <xacro:property name="rfJ_z" value="-0.79558"/>
+  <xacro:property name="rfP_x" value="0.0004"/>
+  <xacro:property name="rfP_y" value="0.0036"/>
+  <xacro:property name="rfP_z" value="-0.031"/>
+
+  <!-- ===================== MATERIALS ===================== -->
+  <material name="armbot_black">
+    <color rgba="0.08 0.08 0.08 1"/>
+  </material>
+  <material name="armbot_yellow">
+    <color rgba="1.0 0.85 0.0 1"/>
+  </material>
+
+  <!-- ===================== MACROS ===================== -->
+  <!-- name = link name, mesh = STL file name (without .STL), mat = material.
+       ox/oy/oz shift mesh + inertia (default 0). -->
+  <xacro:macro name="part" params="name mesh mat mass cx cy cz ixx ixy ixz iyy iyz izz ox:=0 oy:=0 oz:=0">
+    <link name="${name}">
+      <inertial>
+        <origin xyz="${cx+ox} ${cy+oy} ${cz+oz}" rpy="0 0 0"/>
+        <mass value="${mass}"/>
+        <inertia ixx="${ixx}" ixy="${ixy}" ixz="${ixz}" iyy="${iyy}" iyz="${iyz}" izz="${izz}"/>
+      </inertial>
+      <visual>
+        <origin xyz="${ox} ${oy} ${oz}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${mesh_dir}/${mesh}.STL"/>
+        </geometry>
+        <material name="${mat}"/>
+      </visual>
+      <collision>
+        <origin xyz="${ox} ${oy} ${oz}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${mesh_dir}/${mesh}.STL"/>
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+
+  <xacro:macro name="rev_joint" params="name parent child xyz rpy axis lower upper effort velocity">
+    <joint name="${name}" type="revolute">
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+      <parent link="${parent}"/>
+      <child link="${child}"/>
+      <axis xyz="${axis}"/>
+      <limit lower="${lower}" upper="${upper}" effort="${effort}" velocity="${velocity}"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- Gripper joint that follows centre_gear_joint (position = multiplier * master) -->
+  <xacro:macro name="mimic_joint" params="name parent child xyz axis multiplier">
+    <joint name="${name}" type="revolute">
+      <origin xyz="${xyz}" rpy="0 0 0"/>
+      <parent link="${parent}"/>
+      <child link="${child}"/>
+      <axis xyz="${axis}"/>
+      <limit lower="${-side_max}" upper="${side_max}" effort="${gripper_effort}" velocity="${gripper_velocity}"/>
+      <mimic joint="centre_gear_joint" multiplier="${multiplier}" offset="0"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- ===================== ARM (black) ===================== -->
+
+  <xacro:part name="base_link" mesh="base_link" mat="armbot_black" mass="0.253625690516099"
+  cx="1.16795410576227" cy="-1.19443219421231" cz="1.0402184329833"
+  ixx="0.000345676528275635" ixy="-1.42994849903459E-11" ixz="5.63068009978521E-07"
+  iyy="0.000370214955205273" iyz="-6.71141640350259E-13" izz="0.000597520603618796"
+  ox="-1.1668" oy="1.1944" oz="-1.0922"/>
+
+  <xacro:part name="link_1" mesh="link_1" mat="armbot_black" mass="0.250197167053515"
+    cx="-0.0215211072658357" cy="0.0430695398034247" cz="-0.00108836930956224"
+    ixx="0.000387282666497665" ixy="6.15407457424493E-05" ixz="-3.46302530180302E-06"
+    iyy="0.000268259820543635" iyz="-1.32908920501728E-05" izz="0.000352647694230243"/>
+
+  <xacro:part name="link_2" mesh="link_2" mat="armbot_black" mass="0.356315141211562"
+    cx="0.00415754178402006" cy="0.0334166930976645" cz="-0.0849568948718107"
+    ixx="0.00113352470550218" ixy="-2.7968240778833E-07" ixz="2.42342338737527E-06"
+    iyy="0.00095573117462755" iyz="0.000218097697144784" izz="0.000236706859639392"/>
+
+  <xacro:part name="link_3" mesh="link_3" mat="armbot_black" mass="0.0800685236228001"
+    cx="-0.00963810517974717" cy="0.0448134717292477" cz="0.00127738631341434"
+    ixx="0.000103339776550584" ixy="1.44146194901786E-06" ixz="4.44037869019305E-08"
+    iyy="1.99036931851636E-05" iyz="-9.62210474096671E-07" izz="8.94407168149881E-05"/>
+
+  <xacro:part name="link_4" mesh="link_4" mat="armbot_black" mass="0.0141278688267757"
+    cx="0.000225769158099132" cy="0.0109433019822112" cz="0.0159340910990631"
+    ixx="1.95554546448009E-06" ixy="-1.01498132299861E-07" ixz="-3.21413853728938E-08"
+    iyy="1.73483984205993E-06" iyz="-9.03686983886345E-08" izz="6.57133363136111E-07"/>
+
+  <xacro:rev_joint name="joint_1" parent="base_link" child="link_1"
+  xyz="0 0 0" rpy="1.5708 0 0" axis="0 1 0"
+  lower="${arm_lower}" upper="${arm_upper}" effort="${arm_effort}" velocity="${arm_velocity}"/>
+
+  <xacro:rev_joint name="joint_2" parent="link_1" child="link_2"
+    xyz="0 0.05693 0.016527" rpy="0 0 0" axis="1 0 0"
+    lower="-0.5000" upper="${arm_upper}" effort="${arm_effort}" velocity="${arm_velocity}"/>
+
+  <xacro:rev_joint name="joint_3" parent="link_2" child="link_3"
+    xyz="-0.013803 0.051049 -0.14291" rpy="0 0 0" axis="1 0 0"
+    lower="${arm_lower}" upper="${arm_upper}" effort="${arm_effort}" velocity="${arm_velocity}"/>
+
+  <xacro:rev_joint name="joint_4" parent="link_3" child="link_4"
+    xyz="-0.010368 0.10446 -0.0051605" rpy="0 0 0" axis="0 1 0"
+    lower="${arm_lower}" upper="1.00000" effort="${arm_effort}" velocity="${arm_velocity}"/>
+
+  <xacro:rev_joint name="joint_5" parent="link_4" child="link_5"
+    xyz="-1.2789E-05 0.012713 0.022025" rpy="0 0 0" axis="0.99987 -0.013485 0.0083643"
+    lower="-0.5000" upper="${arm_upper}" effort="${arm_effort}" velocity="${arm_velocity}"/>
+
+  <!-- ===================== GRIPPER (yellow) ===================== -->
+  <!-- link_5 = gripper base -->
+  <xacro:part name="link_5" mesh="link_5" mat="armbot_black" mass="0.0396652700264269"
+    cx="0.0218656936610016" cy="-0.00374466162024301" cz="-0.0470615006679833"
+    ixx="1.08694820116733E-05" ixy="1.32353258694541E-07" ixz="-9.63818228842845E-07"
+    iyy="1.59273897038247E-05" iyz="8.71439477412276E-08" izz="6.73665879115032E-06"/>
+
+  <xacro:part name="centre_gear" mesh="centre_gear" mat="armbot_yellow" mass="0.00124932165530755"
+    cx="-1.31173336841428E-05" cy="-0.000887697927836717" cz="1.26379266516263E-05"
+    ixx="2.66140170996426E-08" ixy="1.86974536589879E-10" ixz="1.04086965182943E-11"
+    iyy="4.08900779818099E-08" iyz="6.22753631405733E-11" izz="2.65077841105056E-08"/>
+
+  <!-- NOTE: name and mesh are swapped on purpose (your STL files carry the old labels) -->
+  <xacro:part name="right_gear" mesh="left_gear" mat="armbot_yellow" mass="0.00277395733190241"
+    cx="0.000222091023160065" cy="0.00371743558174109" cz="-0.00755068369917078"
+    ixx="3.52388443037872E-07" ixy="9.95992272458526E-10" ixz="6.00819019534792E-09"
+    iyy="4.26226210044565E-07" iyz="-8.10283392068617E-11" izz="8.83702757148541E-08"/>
+
+  <xacro:part name="left_gear" mesh="right_gear" mat="armbot_yellow" mass="0.00264236087567158"
+    cx="-4.23348725402395E-05" cy="0.00359328282440807" cz="-0.00643682968782522"
+    ixx="3.49270174814913E-07" ixy="1.02779233447843E-09" ixz="-3.77176389314444E-09"
+    iyy="4.2546545298723E-07" iyz="5.08681286544487E-11" izz="8.53567917753674E-08"/>
+
+  <!-- right_finger (STL: left_finger): mesh/inertia shifted so the joint sits on the real pin -->
+  <xacro:part name="right_finger" mesh="left_finger" mat="armbot_yellow" mass="0.00314141748818274"
+    cx="1.518380896581" cy="0.953960530233884" cz="0.739841353063333"
+    ixx="9.67945054782393E-07" ixy="5.51751577080869E-10" ixz="-1.33826795404296E-07"
+    iyy="1.0088490892867E-06" iyz="1.80485168598537E-09" izz="5.97674218006501E-08"
+    ox="${rfJ_x - rfP_x}" oy="${rfJ_y - rfP_y}" oz="${rfJ_z - rfP_z}"/>
+
+  <xacro:part name="left_finger" mesh="right_finger" mat="armbot_yellow" mass="0.00310958056384485"
+    cx="0.00593153675541402" cy="0.00319210002504988" cz="-0.0244051071797453"
+    ixx="9.44661743993387E-07" ixy="5.86113465466537E-10" ixz="1.42550148775488E-07"
+    iyy="9.88113193266036E-07" iyz="-1.92249892901665E-09" izz="6.21247418642663E-08"/>
+
+  <xacro:part name="right_follower" mesh="left_follower" mat="armbot_yellow" mass="0.00103455736182622"
+    cx="0.00045163683062488" cy="0.0065400255162027" cz="-0.0154957393843119"
+    ixx="1.11895612464977E-07" ixy="-5.38718100297167E-11" ixz="2.44008815238113E-09"
+    iyy="1.07901832515372E-07" iyz="-3.29081845831416E-11" izz="7.8968508152867E-09"/>
+
+  <xacro:part name="left_follower" mesh="right_follower" mat="armbot_yellow" mass="0.00091046445200943"
+    cx="-0.000297824888826348" cy="-0.00699142371333106" cz="-0.0133858607617861"
+    ixx="1.09139868070961E-07" ixy="-1.96485314887736E-11" ixz="-1.58242390428137E-09"
+    iyy="1.07683226624114E-07" iyz="2.13413218054678E-11" izz="5.07430815621923E-09"/>
+
+  <!-- MASTER joint: the only gripper joint you command.
+       Range = side_max / gear_ratio so the side gears reach side_max. -->
+  <xacro:rev_joint name="centre_gear_joint" parent="link_5" child="centre_gear"
+    xyz="0.02422 -0.00032664 -0.054321" rpy="0 0 0" axis="0.013485 0.99991 0"
+    lower="0" upper="${side_max / gear_ratio}" effort="${gripper_effort}" velocity="${gripper_velocity}"/>
+
+  <!-- Side gears are parented to link_5 so every angle is absolute -->
+  <xacro:mimic_joint name="right_gear_joint" parent="link_5" child="right_gear"
+    xyz="${0.02422+0.0061665} ${-0.00032664-8.3165E-05} ${-0.054321-0.019949}"
+    axis="0.013485 0.99991 0" multiplier="${right_ratio}"/>
+
+  <xacro:mimic_joint name="left_gear_joint" parent="link_5" child="left_gear"
+    xyz="${0.02422-0.02083} ${-0.00032664+0.00028092} ${-0.054321-0.020175}"
+    axis="0.013485 0.99991 0" multiplier="${left_ratio}"/>
+
+  <!-- Fingers cancel their gear's rotation so the plates stay parallel -->
+  <xacro:mimic_joint name="right_finger_joint" parent="right_gear" child="right_finger"
+    xyz="${rfP_x} ${rfP_y} ${rfP_z}"
+    axis="0.013485 0.99991 0" multiplier="${-right_ratio}"/>
+
+  <xacro:mimic_joint name="left_finger_joint" parent="left_gear" child="left_finger"
+    xyz="-0.00039978 0.0035942 -0.030997"
+    axis="0.013485 0.99991 0" multiplier="${-left_ratio}"/>
+
+  <!-- Followers: pinned to the gripper base, swing with their gear -->
+  <xacro:mimic_joint name="right_follower_joint" parent="link_5" child="right_follower"
+    xyz="0.022298 -0.00030072 -0.094739"
+    axis="0.013485 0.99991 0" multiplier="${right_ratio}"/>
+
+  <!-- left_follower axis is flipped in the export, so its multiplier is flipped too -->
+  <xacro:mimic_joint name="left_follower_joint" parent="link_5" child="left_follower"
+    xyz="0.012007 0.0137 -0.094826"
+    axis="-0.013485 -0.99991 0" multiplier="${-left_ratio}"/>
+
+</robot>
